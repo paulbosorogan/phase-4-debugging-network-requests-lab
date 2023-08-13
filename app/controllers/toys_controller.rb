@@ -7,23 +7,26 @@ class ToysController < ApplicationController
   end
 
   def create
-    toy = Toys.create(toy_params)
+    toy = Toy.create!(toy_params)
     render json: toy, status: :created
   end
 
   def update
-    toy = Toy.find_by(id: params[:id])
-    toy.update(toy_params)
+    toy = find_by
+    toy.update!(toy_params)
+    render json: toy 
   end
 
   def destroy
-    toy = Toy.find_by(id: params[:id])
+    toy = find_by
     toy.destroy
     head :no_content
   end
 
   private
-  
+  def find_by 
+    Toy.find_by(id: params[:id])
+  end 
   def toy_params
     params.permit(:name, :image, :likes)
   end
